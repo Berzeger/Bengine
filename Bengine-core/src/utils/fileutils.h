@@ -4,7 +4,7 @@
 
 namespace bengine
 {
-	std::string read_file(const char * filepath)
+	inline std::string read_file(const char * filepath)
 	{
 		FILE * file;
 		fopen_s(&file, filepath, "rt");

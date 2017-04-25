@@ -14,7 +14,7 @@ namespace bengine
 
 		Shader::~Shader()
 		{
-
+			glDeleteProgram(_shaderId);
 		}
 
 		void Shader::enable() const
@@ -33,8 +33,11 @@ namespace bengine
 			GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
 			GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
 
-			const char * vertSource = read_file(_vertPath).c_str();
-			const char * fragSource = read_file(_fragPath).c_str();
+			std::string vertSourceString = read_file(_vertPath);
+			std::string fragSourceString = read_file(_fragPath);
+				
+			const char * vertSource = vertSourceString.c_str();
+			const char * fragSource = fragSourceString.c_str();
 
 			GLint result;
 
