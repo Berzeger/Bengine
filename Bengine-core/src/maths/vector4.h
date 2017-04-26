@@ -10,7 +10,7 @@ namespace bengine
 		{
 			float x, y, z, w;
 
-			Vector4();
+			Vector4() = default;
 			Vector4(const float& x, const float& y, const float& z, const float& w);
 
 			Vector4& add(const Vector4& other);
