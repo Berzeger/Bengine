@@ -65,12 +65,13 @@ namespace bengine
 		{
 			Matrix4 result(1.0f);
 			
+			// i-th row + k-th column * 4
 			result.elements[0 + 0 * 4] = 2.0f / (right - left);
 			result.elements[1 + 1 * 4] = 2.0f / (top - bottom);
 			result.elements[2 + 2 * 4] = 2.0f / (near - far);
 			result.elements[0 + 3 * 4] = (left + right) / (left - right);
 			result.elements[1 + 3 * 4] = (bottom + top) / (bottom - top);
-			result.elements[2 + 3 * 4] = (near + far) / (far - near); // cherno tady má asi chybu (far + near) / (far - near)
+			result.elements[2 + 3 * 4] = (near + far) / (far - near);
 
 			return result;
 		}
