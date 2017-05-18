@@ -24,19 +24,19 @@ int main(char** argv, int argc)
 	
 	GLfloat vertices[] = 
 	{
-		//4, 3, 0,
-		//12, 3, 0,
-		//4, 6, 0,
-		//4, 6, 0,
-		//12, 6, 0,
-		//12, 3, 0
+		4, 3, 0,
+		12, 3, 0,
+		4, 6, 0,
+		4, 6, 0,
+		12, 6, 0,
+		12, 3, 0
 
-		-0.5f, -0.5f, 0.0f,
-		-0.5f,  0.5f, 0.0f,
-		 0.5f,  0.5f, 0.0f,
-		 0.5f,  0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f
+		//-0.5f, -0.5f, 0.0f,
+		//-0.5f,  0.5f, 0.0f,
+		// 0.5f,  0.5f, 0.0f,
+		// 0.5f,  0.5f, 0.0f,
+		// 0.5f, -0.5f, 0.0f,
+		//-0.5f, -0.5f, 0.0f
 	};
 
 	GLuint vbo;
@@ -47,7 +47,7 @@ int main(char** argv, int argc)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
 
-	Matrix4 ortho = Matrix4::ortographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
+	Matrix4 ortho = Matrix4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
 
 	Shader shader("src/shaders/basic.vert", "src/shaders/basic.frag");
 	shader.enable();
@@ -63,6 +63,5 @@ int main(char** argv, int argc)
 		window.update();
 	}
 
-	system("PAUSE");
 	return 0;
 }

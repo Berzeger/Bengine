@@ -22,7 +22,7 @@ namespace bengine
 			friend Matrix4 operator*(Matrix4 left, const Matrix4& right);
 			Matrix4& operator*=(const Matrix4& other);
 
-			static Matrix4 ortographic(float left, float right, float bottom, float top, float near, float far);
+			static Matrix4 orthographic(float left, float right, float bottom, float top, float near, float far);
 			static Matrix4 perspective(float fov, float aspectRatio, float near, float far);
 
 			static Matrix4 translation(const Vector3& translation);
