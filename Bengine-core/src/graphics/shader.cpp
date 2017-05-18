@@ -84,5 +84,40 @@ namespace bengine
 
 			return program;
 		}
+
+		GLint Shader::getUniformLocation(const GLchar * name)
+		{
+			return glGetUniformLocation(_shaderId, name);
+		}
+
+		void Shader::setUniform1f(const GLchar * name, float value)
+		{
+			glUniform1f(getUniformLocation(name), value);
+		}
+
+		void Shader::setUniform1i(const GLchar * name, int value)
+		{
+			glUniform1i(getUniformLocation(name), value);
+		}
+
+		void Shader::setUniform2f(const GLchar * name, const maths::Vector2& vector)
+		{
+			glUniform2f(getUniformLocation(name), vector.x, vector.y);
+		}
+
+		void Shader::setUniform3f(const GLchar * name, const maths::Vector3& vector)
+		{
+			glUniform3f(getUniformLocation(name), vector.x, vector.y, vector.z);
+		}
+
+		void Shader::setUniform4f(const GLchar * name, const maths::Vector4& vector)
+		{
+			glUniform4f(getUniformLocation(name), vector.x, vector.y, vector.z, vector.w);
+		}
+
+		void Shader::setUniformMat4(const GLchar * name, const maths::Matrix4& matrix)
+		{
+			glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, matrix.elements);
+		}
 	}
 }
