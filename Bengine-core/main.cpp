@@ -20,16 +20,16 @@ int main(char** argv, int argc)
 	using namespace maths;
 
 	Window window("Bengine!", 960, 540);
-	glClearColor(.2f, .3f, .8f, 1.0f);
+	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	
 	GLfloat vertices[] = 
 	{
-		4, 3, 0,
-		12, 3, 0,
-		4, 6, 0,
-		4, 6, 0,
-		12, 6, 0,
-		12, 3, 0
+		0, 0, 0,
+		8, 0, 0,
+		0, 3, 0,
+		0, 3, 0,
+		8, 3, 0,
+		8, 0, 0
 
 		//-0.5f, -0.5f, 0.0f,
 		//-0.5f,  0.5f, 0.0f,
@@ -52,7 +52,10 @@ int main(char** argv, int argc)
 	Shader shader("src/shaders/basic.vert", "src/shaders/basic.frag");
 	shader.enable();
 	shader.setUniformMat4("pr_matrix", ortho);
-	//glUniformMatrix4fv(glGetUniformLocation(shader._shaderId, "pr_matrix"), 1, GL_FALSE, ortho.elements);
+	shader.setUniformMat4("ml_matrix", Matrix4::translation(Vector3(4, 3, 0)));
+
+	shader.setUniform2f("light_pos", Vector2(4.0f, 1.5f));
+	shader.setUniform4f("colour", Vector4(0.2f, 0.3f, 0.8f, 1.0f));
 
 	while (!window.closed())
 	{

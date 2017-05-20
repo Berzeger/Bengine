@@ -1,0 +1,24 @@
+#pragma once
+
+#include <GL/glew.h>
+
+namespace bengine
+{
+	namespace graphics
+	{
+		class Buffer
+		{
+		private:
+			GLuint _bufferId;
+			GLuint _componentCount;
+
+		public:
+			Buffer(GLfloat * data, GLsizei count, GLuint componentCount);
+
+			void bind() const;
+			void unbind() const;
+
+			inline GLuint getComponentCount() const { return _componentCount; }
+		};
+	}
+}
