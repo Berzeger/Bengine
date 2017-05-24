@@ -4,6 +4,10 @@
 #include "src/maths/maths.h"
 #include "src/utils/fileutils.h"
 #include "src/graphics/shader.h"
+#include "src/graphics/buffers/buffer.h"
+#include "src/graphics/buffers/indexbuffer.h"
+#include "src/graphics/buffers/vertexarray.h"
+
 
 #ifdef _WIN32
 #include <windows.h>
@@ -22,6 +26,7 @@ int main(char** argv, int argc)
 	Window window("Bengine!", 960, 540);
 	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	
+#if 0
 	GLfloat vertices[] = 
 	{
 		0, 0, 0,
@@ -30,13 +35,6 @@ int main(char** argv, int argc)
 		0, 3, 0,
 		8, 3, 0,
 		8, 0, 0
-
-		//-0.5f, -0.5f, 0.0f,
-		//-0.5f,  0.5f, 0.0f,
-		// 0.5f,  0.5f, 0.0f,
-		// 0.5f,  0.5f, 0.0f,
-		// 0.5f, -0.5f, 0.0f,
-		//-0.5f, -0.5f, 0.0f
 	};
 
 	GLuint vbo;
@@ -46,6 +44,26 @@ int main(char** argv, int argc)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
+#else
+	GLfloat vertices[] =
+	{
+		0, 0, 0,
+		0, 3, 0,
+		8, 3, 0,
+		8, 0, 0
+	};
+
+	GLushort indices[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	VertexArray vao;
+	Buffer* vbo = new Buffer(vertices, 4 * 3, 3);
+	IndexBuffer ibo(indices, 6);
+
+	vao.addBuffer(vbo, 0);
+#endif
 
 	Matrix4 ortho = Matrix4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
 
@@ -61,10 +79,26 @@ int main(char** argv, int argc)
 	{
 		window.clear();
 
+		double x, y;
+		window.getMousePosition(x, y);
+		shader.setUniform2f("light_pos", Vector2((float)(x * 16.0f / 960.0f), (float)(9.0f - y * 9.0f / 540.0f)));
+#if 0
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+#else
+		vao.bind();
+		ibo.bind();
+
+		glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+
+		ibo.unbind();
+		vao.unbind();
+
+#endif
 
 		window.update();
 	}
+
+	delete vbo;
 
 	return 0;
 }
