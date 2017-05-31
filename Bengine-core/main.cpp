@@ -58,11 +58,29 @@ int main(char** argv, int argc)
 		2, 3, 0
 	};
 
-	VertexArray vao;
-	Buffer* vbo = new Buffer(vertices, 4 * 3, 3);
+	GLfloat coloursA[] = {
+		1, 0, 1, 1,
+		1, 0, 1, 1,
+		1, 0, 1, 1,
+		1, 0, 1, 1
+	};
+
+	GLfloat coloursB[] = {
+		0.2f, 0.3f, 0.8f, 1,
+		0.2f, 0.3f, 0.8f, 1,
+		0.2f, 0.3f, 0.8f, 1,
+		0.2f, 0.3f, 0.8f, 1
+	};
+
+	VertexArray sprite1, sprite2;
 	IndexBuffer ibo(indices, 6);
 
-	vao.addBuffer(vbo, 0);
+	sprite1.addBuffer(new Buffer(vertices, 4 * 3, 3), 0);
+	sprite1.addBuffer(new Buffer(coloursA, 4 * 4, 4), 1);
+
+	sprite2.addBuffer(new Buffer(vertices, 4 * 3, 3), 0);
+	sprite2.addBuffer(new Buffer(coloursB, 4 * 4, 4), 1);
+
 #endif
 
 	Matrix4 ortho = Matrix4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
@@ -85,20 +103,28 @@ int main(char** argv, int argc)
 #if 0
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 #else
-		vao.bind();
+		sprite1.bind();
 		ibo.bind();
 
+		shader.setUniformMat4("ml_matrix", Matrix4::translation(Vector3(4, 3, 0)));
 		glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
 
 		ibo.unbind();
-		vao.unbind();
+		sprite1.unbind();
+
+		sprite2.bind();
+		ibo.bind();
+
+		shader.setUniformMat4("ml_matrix", Matrix4::translation(Vector3(0, 0, 0)));
+		glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_SHORT, 0);
+
+		ibo.unbind();
+		sprite2.unbind();
 
 #endif
 
 		window.update();
 	}
-
-	delete vbo;
 
 	return 0;
 }

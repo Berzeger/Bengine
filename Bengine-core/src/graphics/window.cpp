@@ -34,8 +34,13 @@ namespace bengine
 
 		void Window::update()
 		{
+			GLenum error = glGetError();
+			if (error != GL_NO_ERROR)
+			{
+				std::cout << "OpenGL Error: " << error << std::endl;
+			}
+
 			glfwPollEvents();
-			//glfwGetFramebufferSize(_window, &_width, &_height);
 			glfwSwapBuffers(_window);
 		}
 
