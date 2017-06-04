@@ -62,7 +62,7 @@ namespace bengine
 				return false;
 			}
 
-			_window = glfwCreateWindow(_width, _height, _title, NULL, NULL);
+			_window = glfwCreateWindow(_width, _height, _title, nullptr, nullptr);
 
 			if (!_window)
 			{

@@ -41,7 +41,7 @@ namespace bengine
 
 			GLint result;
 
-			glShaderSource(vertex, 1, &vertSource, NULL);
+			glShaderSource(vertex, 1, &vertSource, nullptr);
 			glCompileShader(vertex);
 
 			glGetShaderiv(vertex, GL_COMPILE_STATUS, &result);
@@ -57,7 +57,7 @@ namespace bengine
 				return 0;
 			}
 
-			glShaderSource(fragment, 1, &fragSource, NULL);
+			glShaderSource(fragment, 1, &fragSource, nullptr);
 			glCompileShader(fragment);
 
 			glGetShaderiv(fragment, GL_COMPILE_STATUS, &result);

@@ -10,6 +10,12 @@ namespace bengine
 {
 	namespace graphics
 	{
+		struct VertexData
+		{
+			maths::Vector3 vertex;
+			maths::Vector4 colour;
+		};
+
 		class Renderable2D
 		{
 		public:
