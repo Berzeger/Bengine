@@ -37,6 +37,8 @@ namespace bengine
 			void clear() const;
 			inline int getWidth() const { return _width; }
 			inline int getHeight() const { return _height; }
+			inline void setWidth(int width) { _width = width; }
+			inline void setHeight(int height) { _height = height; }
 
 			bool isKeyPressed(unsigned int keycode) const;
 			bool isMouseButtonPressed(unsigned int button) const;

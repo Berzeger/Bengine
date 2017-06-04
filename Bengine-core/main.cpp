@@ -48,7 +48,7 @@ int main(char** argv, int argc)
 
 		double x, y;
 		window.getMousePosition(x, y);
-		shader.setUniform2f("light_pos", Vector2((float)(x * 16.0f / 960.0f), (float)(9.0f - y * 9.0f / 540.0f)));
+		shader.setUniform2f("light_pos", Vector2((float)(x * 16.0f / window.getWidth()), (float)(9.0f - y * 9.0f / window.getHeight())));
 		renderer.submit(&sprite);
 		renderer.submit(&sprite2);
 		renderer.flush();
