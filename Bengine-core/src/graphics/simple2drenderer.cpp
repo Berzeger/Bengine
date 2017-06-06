@@ -6,22 +6,22 @@ namespace bengine
 	{
 		void Simple2DRenderer::submit(const Renderable2D* renderable)
 		{
-			_renderQueue.push_back(renderable);
+			_renderQueue.push_back((StaticSprite*)renderable);
 		}
 
 		void Simple2DRenderer::flush()
 		{
 			while (!_renderQueue.empty())
 			{
-				const Renderable2D* renderable = _renderQueue.front();
-				renderable->getVAO()->bind();
-				renderable->getIBO()->bind();
+				const StaticSprite* sprite = _renderQueue.front();
+				sprite->getVAO()->bind();
+				sprite->getIBO()->bind();
 
-				renderable->getShader().setUniformMat4("ml_matrix", maths::Matrix4::translation(renderable->getPosition()));
-				glDrawElements(GL_TRIANGLES, renderable->getIBO()->getCount(), GL_UNSIGNED_SHORT, nullptr);
+				sprite->getShader().setUniformMat4("ml_matrix", maths::Matrix4::translation(sprite->getPosition()));
+				glDrawElements(GL_TRIANGLES, sprite->getIBO()->getCount(), GL_UNSIGNED_SHORT, nullptr);
 
-				renderable->getIBO()->unbind();
-				renderable->getVAO()->unbind();
+				sprite->getIBO()->unbind();
+				sprite->getVAO()->unbind();
 
 				_renderQueue.pop_front();
 			}
