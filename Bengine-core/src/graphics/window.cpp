@@ -76,6 +76,7 @@ namespace bengine
 			glfwSetKeyCallback(_window, key_callback);
 			glfwSetMouseButtonCallback(_window, mouse_button_callback);
 			glfwSetCursorPosCallback(_window, cursor_position_callback);
+			glfwSwapInterval(0); // vsync off
 
 			if (glewInit() != GLEW_OK)
 			{

@@ -4,6 +4,7 @@
 #include "src/graphics/window.h"
 #include "src/maths/maths.h"
 #include "src/utils/fileutils.h"
+#include "src/utils/timer.h"
 #include "src/graphics/shader.h"
 #include "src/graphics/buffers/buffer.h"
 #include "src/graphics/buffers/indexbuffer.h"
@@ -73,6 +74,9 @@ int main(char** argv, int argc)
 	shader.setUniform2f("light_pos", Vector2(4.0f, 1.5f));
 	shader.setUniform4f("colour", Vector4(0.2f, 0.3f, 0.8f, 1.0f));
 
+	Timer timer;
+	float time = 0;
+	unsigned int frames = 0;
 	while (!window.closed())
 	{
 		window.clear();
@@ -93,6 +97,14 @@ int main(char** argv, int argc)
 		renderer.flush();
 
 		window.update();
+
+		frames++;
+		if (timer.elapsed() - time > 1.0f)
+		{
+			time += 1.0f;
+			printf("%d FPS\n", frames);
+			frames = 0;	
+		}
 	}
 
 	return 0;

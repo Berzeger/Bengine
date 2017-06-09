@@ -13,7 +13,7 @@ namespace bengine
 		struct VertexData
 		{
 			maths::Vector3 vertex;
-			maths::Vector4 colour;
+			unsigned int colour;
 		};
 
 		class Renderable2D

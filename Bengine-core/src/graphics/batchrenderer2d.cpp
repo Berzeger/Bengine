@@ -26,7 +26,7 @@ namespace bengine
 			glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
 			glEnableVertexAttribArray(SHADER_COLOUR_INDEX);
 			glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)nullptr);
-			glVertexAttribPointer(SHADER_COLOUR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(3 * sizeof(GLfloat)));
+			glVertexAttribPointer(SHADER_COLOUR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::colour)));
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 			GLushort indices[RENDERER_INDICES_SIZE];
@@ -60,20 +60,27 @@ namespace bengine
 			const maths::Vector2& size = renderable->getSize();
 			const maths::Vector4& colour = renderable->getColour();
 
+			int r = colour.x * 255;
+			int g = colour.y * 255;
+			int b = colour.z * 255;
+			int a = colour.w * 255;
+
+			unsigned int c = a << 24 | b << 16 | g << 8 | r;
+
 			_buffer->vertex = position;
-			_buffer->colour = colour;
+			_buffer->colour = c;
 			_buffer++;
 
 			_buffer->vertex = maths::Vector3(position.x, position.y + size.y, position.z);
-			_buffer->colour = colour;
+			_buffer->colour = c;
 			_buffer++;
 
 			_buffer->vertex = maths::Vector3(position.x + size.x, position.y + size.y, position.z);
-			_buffer->colour = colour;
+			_buffer->colour = c;
 			_buffer++;
 
 			_buffer->vertex = maths::Vector3(position.x + size.x, position.y, position.z);
-			_buffer->colour = colour;
+			_buffer->colour = c;
 			_buffer++;
 
 			_indexCount += 6;

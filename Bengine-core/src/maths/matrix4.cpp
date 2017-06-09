@@ -30,10 +30,9 @@ namespace bengine
 			return Matrix4(1.0f);
 		}
 
-		// this is wrong
 		Matrix4& Matrix4::multiply(const Matrix4& other)
 		{
-			Matrix4 result;
+			float data[16];
 
 			for (int y = 0; y < 4; ++y)
 			{
@@ -45,8 +44,11 @@ namespace bengine
 					{
 						sum += elements[x + e * 4] * other.elements[e + y * 4];
 					}
+					data[x + y * 4] = sum;
 				}
 			}
+
+			memcpy(elements, data, 16);
 
 			return *this;
 		}
