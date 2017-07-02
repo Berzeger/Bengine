@@ -102,7 +102,7 @@ int main(char** argv, int argc)
 		if (timer.elapsed() - time > 1.0f)
 		{
 			time += 1.0f;
-			printf("%d FPS\n", frames);
+			printf("Rendering %d sprites, %d FPS\n", sprites.size(), frames);
 			frames = 0;	
 		}
 	}
