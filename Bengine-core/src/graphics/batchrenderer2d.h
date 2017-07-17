@@ -22,6 +22,7 @@ namespace bengine
 			GLuint _vao;
 			GLuint _vbo;
 			VertexData* _buffer;
+			GLuint* _indices;
 
 			IndexBuffer* _ibo;
 			GLsizei _indexCount;
@@ -31,9 +32,9 @@ namespace bengine
 		public:
 			BatchRenderer2D();
 			~BatchRenderer2D();
-			void begin();
+			void begin() override;
 			void submit(const Renderable2D* renderable) override;
-			void end();
+			void end() override;
 			void flush() override;
 		};
 	}

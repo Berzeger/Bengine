@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <GL/glew.h>
+#include <GL/GLU.h>
 #include <GLFW/glfw3.h>
 
 namespace bengine

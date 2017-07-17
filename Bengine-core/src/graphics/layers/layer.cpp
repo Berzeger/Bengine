@@ -31,11 +31,13 @@ namespace bengine
 		void Layer::render()
 		{
 			_shader->enable();
+			_renderer->begin();
 			for (const Renderable2D* renderable : _renderables)
 			{
 				_renderer->submit(renderable);
 			}
 
+			_renderer->end();
 			_renderer->flush();
 			_shader->disable();
 		}

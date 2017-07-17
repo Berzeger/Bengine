@@ -12,6 +12,7 @@ namespace bengine
 		BatchRenderer2D::~BatchRenderer2D()
 		{
 			delete _ibo;
+			delete _indices;
 			glDeleteBuffers(1, &_vbo);
 		}
 
@@ -29,21 +30,21 @@ namespace bengine
 			glVertexAttribPointer(SHADER_COLOUR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::colour)));
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-			GLushort indices[RENDERER_INDICES_SIZE];
+			_indices = new GLuint[RENDERER_INDICES_SIZE];
 
 			// 4 vertices, 6 indices
 			for (int i = 0, offset = 0; i < RENDERER_INDICES_SIZE; i += 6, offset += 4)
 			{
-				indices[i]	   = offset + 0;
-				indices[i + 1] = offset + 1;
-				indices[i + 2] = offset + 2;
+				_indices[i]	   = offset + 0;
+				_indices[i + 1] = offset + 1;
+				_indices[i + 2] = offset + 2;
 
-				indices[i + 3] = offset + 2;
-				indices[i + 4] = offset + 3;
-				indices[i + 5] = offset + 0;
+				_indices[i + 3] = offset + 2;
+				_indices[i + 4] = offset + 3;
+				_indices[i + 5] = offset + 0;
 			}
 
-			_ibo = new IndexBuffer(indices, RENDERER_INDICES_SIZE);
+			_ibo = new IndexBuffer(_indices, RENDERER_INDICES_SIZE);
 
 			glBindVertexArray(0);
 		}
@@ -97,7 +98,7 @@ namespace bengine
 			glBindVertexArray(_vao);
 			_ibo->bind();
 
-			glDrawElements(GL_TRIANGLES, _indexCount, GL_UNSIGNED_SHORT, nullptr);
+			glDrawElements(GL_TRIANGLES, _indexCount, GL_UNSIGNED_INT, nullptr);
 
 			_ibo->unbind();
 			glBindVertexArray(0);

@@ -1,18 +1,17 @@
 #pragma once
 
 #include "layer.h"
+#include "../batchrenderer2d.h"
 
 namespace bengine
 {
 	namespace graphics
 	{
-		class TileLayer
+		class TileLayer : public Layer
 		{
 		public:
-			TileLayer(Renderer2D* renderer, Shader* shader, maths::Matrix4 projectionMatrix);
+			TileLayer(Shader* shader);
 			virtual ~TileLayer();
-			virtual void add(Renderable2D* renderable);
-			virtual void render();
 		};
 	}
 }	

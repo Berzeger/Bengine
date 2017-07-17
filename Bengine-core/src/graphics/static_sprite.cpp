@@ -26,7 +26,7 @@ namespace bengine
 			_vertexArray->addBuffer(new Buffer(vertices, 4 * 3, 3), 0);
 			_vertexArray->addBuffer(new Buffer(colours, 4 * 4, 4), 1);
 
-			GLushort indices[] = { 0, 1, 2, 2, 3, 0 };
+			GLuint indices[] = { 0, 1, 2, 2, 3, 0 };
 			_indexBuffer = new IndexBuffer(indices, 6);
 		}
 
