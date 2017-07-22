@@ -30,7 +30,7 @@ namespace bengine
 			glVertexAttribPointer(SHADER_COLOUR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::colour)));
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-			_indices = new GLuint[RENDERER_INDICES_SIZE];
+			_indices = new GLuint[RENDERER_INDICES_SIZE]; // we need to allocate this on heap, otherwise we'll get stack overflow.
 
 			// 4 vertices, 6 indices
 			for (int i = 0, offset = 0; i < RENDERER_INDICES_SIZE; i += 6, offset += 4)
