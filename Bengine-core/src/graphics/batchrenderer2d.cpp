@@ -68,19 +68,19 @@ namespace bengine
 
 			unsigned int c = a << 24 | b << 16 | g << 8 | r;
 
-			_buffer->vertex = position;
+			_buffer->vertex = *_transformationBack * position;
 			_buffer->colour = c;
 			_buffer++;
 
-			_buffer->vertex = maths::Vector3(position.x, position.y + size.y, position.z);
+			_buffer->vertex = *_transformationBack * maths::Vector3(position.x, position.y + size.y, position.z);
 			_buffer->colour = c;
 			_buffer++;
 
-			_buffer->vertex = maths::Vector3(position.x + size.x, position.y + size.y, position.z);
+			_buffer->vertex = *_transformationBack * maths::Vector3(position.x + size.x, position.y + size.y, position.z);
 			_buffer->colour = c;
 			_buffer++;
 
-			_buffer->vertex = maths::Vector3(position.x + size.x, position.y, position.z);
+			_buffer->vertex = *_transformationBack * maths::Vector3(position.x + size.x, position.y, position.z);
 			_buffer->colour = c;
 			_buffer++;
 

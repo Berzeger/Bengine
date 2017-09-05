@@ -17,6 +17,7 @@
 #include "src/graphics/layers/tilelayer.h"
 
 #define BATCH_RENDERER 1
+#define TEST_50K_SPRITES 0
 
 #ifdef _WIN32
 #include <windows.h>
@@ -44,6 +45,7 @@ int main(char** argv, int argc)
 
 	TileLayer layer(shader);
 	
+#if TEST_50K_SPRITES
 	for (float y = -9.0f; y < 9.0f; y += 0.1f)
 	{
 		for (float x = -16.0f; x < 16.0f; x += 0.1f)
@@ -51,6 +53,15 @@ int main(char** argv, int argc)
 			layer.add(new Sprite(x, y, 0.09f, 0.09f, maths::Vector4(rand() % 1000 / 1000.0f, 0, 1, 1)));
 		}
 	}
+#else
+	for (float y = -9.0f; y < 9.0f; y++)
+	{
+		for (float x = -16.0f; x < 16.0f; x++)
+		{
+			layer.add(new Sprite(x, y, 0.9f, 0.9f, maths::Vector4(rand() % 1000 / 1000.0f, 0, 1, 1)));
+		}
+	}
+#endif
 	
 	Timer timer;
 	float time = 0;

@@ -22,6 +22,12 @@ namespace bengine
 			friend Matrix4 operator*(Matrix4 left, const Matrix4& right);
 			Matrix4& operator*=(const Matrix4& other);
 
+			Vector3 multiply(const Vector3& other) const;
+			friend Vector3 operator*(const Matrix4& left, const Vector3& right);
+
+			Vector4 multiply(const Vector4& other) const;
+			friend Vector4 operator*(const Matrix4& left, const Vector4& right);
+
 			static Matrix4 orthographic(float left, float right, float bottom, float top, float near, float far);
 			static Matrix4 perspective(float fov, float aspectRatio, float near, float far);
 
