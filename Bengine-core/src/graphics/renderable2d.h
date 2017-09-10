@@ -4,6 +4,7 @@
 #include "buffers/indexbuffer.h"
 #include "buffers/vertexarray.h"
 #include "../maths/maths.h"
+#include "renderer2d.h"
 #include "shader.h"
 
 namespace bengine
@@ -18,16 +19,23 @@ namespace bengine
 
 		class Renderable2D
 		{
-		public:
+		protected:
 			maths::Vector3 _position;
 			maths::Vector2 _size;
 			maths::Vector4 _colour;
 
+			Renderable2D() { }
+		public:
 			Renderable2D(maths::Vector3 position, maths::Vector2 size, maths::Vector4 colour)
 				: _position(position), _size(size), _colour(colour)
 			{ }
 
 			virtual ~Renderable2D()	{ }
+
+			virtual void submit(Renderer2D * renderer) const
+			{
+				renderer->submit(this);
+			}
 
 			inline const maths::Vector3& getPosition() const { return _position; }
 			inline const maths::Vector2& getSize() const { return _size; }

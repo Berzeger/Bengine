@@ -1,13 +1,16 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <vector>
 #include "../maths/maths.h"
-#include "renderable2d.h"
+
 
 namespace bengine
 {
 	namespace graphics
 	{
+		class Renderable2D;
+
 		class Renderer2D
 		{
 		protected:

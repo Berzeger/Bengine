@@ -15,6 +15,7 @@
 #include "src/graphics/simple2drenderer.h"
 #include "src/graphics/batchrenderer2d.h"
 #include "src/graphics/layers/tilelayer.h"
+#include "src/graphics/layers/group.h"
 
 #define BATCH_RENDERER 1
 #define TEST_50K_SPRITES 0
@@ -39,9 +40,12 @@ int main(char** argv, int argc)
 	Matrix4 ortho = Matrix4::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
 
 	Shader *shader = new Shader("src/shaders/basic.vert", "src/shaders/basic.frag");
+	Shader *shader2 = new Shader("src/shaders/basic.vert", "src/shaders/basic.frag");
 
 	shader->enable(); 
 	shader->setUniform2f("light_pos", Vector2(4.0f, 1.5f));
+	shader2->enable();
+	shader2->setUniform2f("light_pos", Vector2(4.0f, 1.5f));
 
 	TileLayer layer(shader);
 	
@@ -50,18 +54,32 @@ int main(char** argv, int argc)
 	{
 		for (float x = -16.0f; x < 16.0f; x += 0.1f)
 		{
-			layer.add(new Sprite(x, y, 0.09f, 0.09f, maths::Vector4(rand() % 1000 / 1000.0f, 0, 1, 1)));
+			layer.add(new Sprite(x, y, 0.09f, 0.09f, Vector4(rand() % 1000 / 1000.0f, 0, 1, 1)));
 		}
 	}
 #else
-	for (float y = -9.0f; y < 9.0f; y++)
-	{
-		for (float x = -16.0f; x < 16.0f; x++)
-		{
-			layer.add(new Sprite(x, y, 0.9f, 0.9f, maths::Vector4(rand() % 1000 / 1000.0f, 0, 1, 1)));
-		}
-	}
+	//for (float y = -9.0f; y < 9.0f; y++)
+	//{
+	//	for (float x = -16.0f; x < 16.0f; x++)
+	//	{
+	//		layer.add(new Sprite(x, y, 0.9f, 0.9f, maths::Vector4(rand() % 1000 / 1000.0f, 0, 1, 1)));
+	//	}
+	//}
+
+	Matrix4 transform = Matrix4::translation(Vector3(-15.0f, 5.0f, 0.0f)) * Matrix4::rotation(45, Vector3(0, 0, 1));
+	Group * group = new Group(transform);
+	group->add(new Sprite(0, 0, 6, 3, Vector4(1, 1, 1, 1)));
+
+	Group * button = new Group(Matrix4::translation(Vector3(0.5f, 0.5f, 0.0f)));
+	button->add(new Sprite(0, 0, 5.0f, 2.0f, Vector4(1, 0, 1, 1)));
+	button->add(new Sprite(0.5f, 0.5f, 3.0f, 1.0f, Vector4(0.2f, 0.3f, 0.8f, 1)));
+	group->add(button);
+
+	layer.add(group);
 #endif
+
+	//TileLayer layer2(shader2);
+	//layer2.add(new Sprite(-2, -2, 4, 4, Vector4(1, 0, 1, 1)));
 	
 	Timer timer;
 	float time = 0;
