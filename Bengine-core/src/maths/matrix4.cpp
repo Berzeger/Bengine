@@ -48,7 +48,7 @@ namespace bengine
 				}
 			}
 
-			memcpy(elements, data, 16);
+			memcpy(elements, data, 4 * 4 * sizeof(float));
 
 			return *this;
 		}
