@@ -17,6 +17,8 @@
 #include "src/graphics/layers/tilelayer.h"
 #include "src/graphics/layers/group.h"
 
+#include <FreeImage.h>
+
 #define BATCH_RENDERER 1
 #define TEST_50K_SPRITES 0
 
@@ -28,6 +30,7 @@ extern "C" {
 }
 #endif
 
+#if 0
 int main(char** argv, int argc) 
 {
 	using namespace bengine;
@@ -106,6 +109,55 @@ int main(char** argv, int argc)
 			frames = 0;	
 		}
 	}
+
+	return 0;
+}
+
+#endif
+
+int main()
+{
+	const char * filename = "test.png";
+
+	//image format
+	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
+	//pointer to the image, once loaded
+	FIBITMAP *dib(0);
+	//pointer to the image data
+	BYTE* bits(0);
+	//image width and height
+	unsigned int width(0), height(0);
+	//OpenGL's image ID to map to
+	GLuint gl_texID;
+
+	//check the file signature and deduce its format
+	fif = FreeImage_GetFileType(filename, 0);
+	//if still unknown, try to guess the file format from the file extension
+	if (fif == FIF_UNKNOWN)
+		fif = FreeImage_GetFIFFromFilename(filename);
+	//if still unkown, return failure
+	if (fif == FIF_UNKNOWN)
+		return 1;
+
+	//check that the plugin has reading capabilities and load the file
+	if (FreeImage_FIFSupportsReading(fif))
+		dib = FreeImage_Load(fif, filename);
+	//if the image failed to load, return failure
+	if (!dib)
+		return 1;
+
+	//retrieve the image data
+	bits = FreeImage_GetBits(dib);
+	//get the image width and height
+	width = FreeImage_GetWidth(dib);
+	height = FreeImage_GetHeight(dib);
+	//if this somehow one of these failed (they shouldn't), return failure
+	if ((bits == 0) || (width == 0) || (height == 0))
+		return 1;
+
+	std::cout << width << ", " << height;
+
+	FreeImage_Unload(dib);
 
 	return 0;
 }
