@@ -37,7 +37,7 @@ namespace bengine
 			GLenum error = glGetError();
 			if (error != GL_NO_ERROR)
 			{
-				std::cout << "OpenGL Error: " << gluErrorString(error) << std::endl;
+				std::cout << "OpenGL Error: " << gluErrorString(error) << " (" << error << ")" << std::endl;
 			}
 
 			glfwPollEvents();
